@@ -1,0 +1,22 @@
+{% extends 'learning_logs/base.html' %}
+
+{% block title %}All Topics - Learning Log{% endblock title %}
+
+{% block content %}
+    <div class="container">
+        <div class="galaxy-icon">🚀</div>
+        <h1>All Topics</h1>
+        
+        {% if topics %}
+            <ul class="topics-list">
+                {% for topic in topics %}
+                <li>
+                    <a href="{% url 'learning_logs:topic' topic.id %}" class="nav-link">{{ topic.text }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="empty-message">No topics have been added yet.</p>
+        {% endif %}
+    </div>
+{% endblock content %}

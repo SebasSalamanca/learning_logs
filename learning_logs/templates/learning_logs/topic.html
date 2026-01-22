@@ -1,0 +1,25 @@
+{% extends 'learning_logs/base.html' %}
+
+{% block title %}{{ topic.text }} - Learning Log{% endblock title %}
+
+{% block content %}
+    <div class="container">
+        <div class="galaxy-icon">🚀</div>
+        <h1>{{ topic.text }}</h1>
+        {% if entries %}
+            <ul class="entries-list">
+                {% for entry in entries %}
+                <li class="entry-item">
+                    <span class="entry-date">{{ entry.date_added|date:"M d, Y H:i" }}</span>
+                    <div class="entry-text">{{ entry.text|linebreaks }}</div>
+                </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="empty-message">No entries have been added yet for {{ topic.text }}.</p>
+        {% endif %}
+        <div class="nav-container" style="margin-top: 30px;">
+            <a href="{% url 'learning_logs:all_topics' %}" class="nav-link">← Back to Topics</a>
+        </div>
+    </div>
+{% endblock content %}

@@ -7,5 +7,9 @@ from . import views
 app_name = 'learning_logs'
 urlpatterns = [
     #Hime page
-    path('', views.index, name = 'index')
-]
+    path('', views.index, name = 'index'),
+    #Path that shows all topics. 
+    path('topics/', views.all_topics, name = 'all_topics'),
+    # Detail page for a single topic. 
+    path('topics/<int:topic_id>/', views.topic, name = 'topic')
+]   
