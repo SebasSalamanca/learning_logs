@@ -1,5 +1,8 @@
 <p>
-    <a href="{% url 'learning_logs:index' %}">learning log sebas</a> <!-- href create a clickable buttom to the index.tml -->
+    <a href="{% url 'learning_logs:index' %}">learning log sebas</a> - <!-- href create a clickable buttom to the index.tml -->
+    <a href="{% url 'learning_logs:topics' %}">topic's sebas</a> <!-- href create a clickable buttom to the index.tml -->
  
 </p>
-{% block content %}{% endblock content %}
+{% block content %}{% endblock content %} 
+<!-- Used to a new template, it may use it or not to write new content. is a placeholder the child template
+    will define the kind of information that goes in the content block-->
