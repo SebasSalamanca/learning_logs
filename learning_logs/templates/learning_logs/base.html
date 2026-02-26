@@ -1,7 +1,12 @@
 <p>
-    <a href="{% url 'learning_logs:index' %}">learning log sebas</a> - <!-- href create a clickable buttom to the index.tml -->
-    <a href="{% url 'learning_logs:topics' %}">topic's sebas</a> <!-- href create a clickable buttom to the index.tml -->
- 
+    <a href="{% url 'learning_logs:index' %}">learning log </a> - <!-- href create a clickable buttom to the index.tml -->
+    <a href="{% url 'learning_logs:topics' %}">topic</a> - <!-- href create a clickable buttom to the index.tml -->
+    {% if 'user.is_authenticated' %}
+        Hello , {{user.username}}.
+    {% else %}
+        <a href = "{% url 'accounts:login' %}"> Log in</a>
+    {% endif %}
+
 </p>
 {% block content %}{% endblock content %} 
 <!-- Used to a new template, it may use it or not to write new content. is a placeholder the child template
