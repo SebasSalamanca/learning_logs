@@ -11,3 +11,11 @@
 {% block content %}{% endblock content %} 
 <!-- Used to a new template, it may use it or not to write new content. is a placeholder the child template
     will define the kind of information that goes in the content block-->
+
+{% if user.is_authenticated %}
+    <hr />
+    <form action="{% url 'accounts:logout' %}" method='post'>
+        {% csfr_token %}
+        <buttom name = 'submit'> Log out</button>
+    </form>
+{% endif %}
