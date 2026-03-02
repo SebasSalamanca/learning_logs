@@ -1,9 +1,10 @@
 <p>
     <a href="{% url 'learning_logs:index' %}">learning log </a> - <!-- href create a clickable buttom to the index.tml -->
     <a href="{% url 'learning_logs:topics' %}">topic</a> - <!-- href create a clickable buttom to the index.tml -->
-    {% if 'user.is_authenticated' %}
+    {% if user.is_authenticated %}
         Hello , {{user.username}}.
     {% else %}
+        <a href = "{% url 'accounts:register' %}">Register</a>
         <a href = "{% url 'accounts:login' %}"> Log in</a>
     {% endif %}
 
@@ -15,7 +16,7 @@
 {% if user.is_authenticated %}
     <hr />
     <form action="{% url 'accounts:logout' %}" method='post'>
-        {% csfr_token %}
-        <buttom name = 'submit'> Log out</button>
+        {% csrf_token %}
+        <button name = 'submit'> Log out</button>
     </form>
 {% endif %}

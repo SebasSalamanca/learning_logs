@@ -121,4 +121,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 #My settings
-LOGIN_REDIRECT_URL = 'learning_logs:index'
+#Once the user has logged in, redirect to this page:
+LOGIN_REDIRECT_URL = 'learning_logs:index' 
+LOGOUT_REDIRECT_URL = 'learning_logs:index'
+
