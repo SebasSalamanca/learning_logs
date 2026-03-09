@@ -1,0 +1,9 @@
+{% extends "learning_logs/base.html"%}
+{% block content %}
+
+<h2>Registration Successful!</h2>
+<p>We've sent a confirmation email to your inbox. Please check your email and click the activation link to activate your account.</p>
+<p>Already activated? <a href="{% url 'accounts:login' %}">Log in here</a></p>
+
+{% endblock content %}
+
