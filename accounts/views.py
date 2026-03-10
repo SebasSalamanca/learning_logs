@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
+from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
 #Send an email in registration process. 
@@ -12,10 +13,15 @@ from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_decode
 from django.contrib.auth import get_user_model
 
+
 from .forms import OfficialRegisterForm
+from ll_project import settings
 # Create your views here.
 
 User = get_user_model()
+
+def confirmation_sent(request):
+    return render(request, 'registration/confirmation_sent.html')
 
 
 def register(request):
@@ -40,14 +46,21 @@ def register(request):
             uid = urlsafe_base64_encode(force_bytes(new_user.pk))
             
             #Send confirmation email
-            activation_link = request.build_absolute_uri(f'/activate/{uid}/{token}/')
-            email_body = render_to_string('emails/registration_email.html', {
+            activation_link = request.build_absolute_uri(f'/accounts/activate/{uid}/{token}/')
+            email_body = render_to_string('registration/email_confirmation.html', {
                 'user': new_user,
                 'activation_link': activation_link,
             })
-            send_mail('Confirm your account', email_body, 'jsebastian1119@gmail.com', [new_user.email])
+            send_mail(
+            'Confirm your account',
+            email_body,
+            settings.DEFAULT_FROM_EMAIL,
+            [new_user.email],
+            fail_silently=False,
+            html_message=email_body,
+)
 
-            return redirect('confirmation_sent')
+            return redirect('accounts:confirmation_sent')
 
             #login(request, new_user)
             #return redirect('learning_logs:index')
@@ -56,20 +69,18 @@ def register(request):
     context = {'form': form}
     return render(request, 'registration/register.html', context)
 
-def confirmation_sent(request):
-    return render(request, 'registration/confirmation_sent.html')
 
 def activate(request, uidb64, token):
-    try: 
+    try:
         uid = urlsafe_base64_decode(uidb64).decode()
-        new_user = User.objects.get(pk=uid)
-    except (User.DoesNotExist, ValueError):
-        new_user = None
-    
-    if new_user and default_token_generator.check_token(new_user, token):
-        new_user.is_active = True
-        new_user.save()
-        
-        return redirect('learning_logs:index')
+        user = User.objects.get(pk=uid)
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
 
-    return render(request, 'registration/register.html')
+    if user is not None and default_token_generator.check_token(user, token):
+        user.is_active = True
+        user.save()
+        login(request, user)
+        return redirect('learning_logs:index')  # redirige al home
+    else:
+        return render(request, 'registration/activation_invalid.html')

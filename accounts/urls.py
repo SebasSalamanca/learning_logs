@@ -11,5 +11,6 @@ urlpatterns = [
     path('', include('django.contrib.auth.urls')),
     #Registration page 
     path('register/', views.register, name = 'register'),
-    path('confirmation-sent/', views.confirmation_sent, name='confirmation_sent'),
+    path('confirmation_sent/', views.confirmation_sent, name='confirmation_sent'),
+    path('activate/<uidb64>/<token>/', views.activate, name='activate'),
 ]
