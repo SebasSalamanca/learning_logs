@@ -1,7 +1,6 @@
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
-from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
 
 #Send an email in registration process. 
 from django.contrib.auth.tokens import default_token_generator
@@ -12,7 +11,6 @@ from django.template.loader import render_to_string
 
 from django.utils.http import urlsafe_base64_decode
 from django.contrib.auth import get_user_model
-
 
 from .forms import OfficialRegisterForm
 from ll_project import settings
